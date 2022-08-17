@@ -1,3 +1,5 @@
+import './category-item.styles.scss'
+
 export default function CategoryItem({ category }) {
   //define category object which is ready to be received from outside
 
