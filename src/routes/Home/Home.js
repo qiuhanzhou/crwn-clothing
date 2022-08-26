@@ -1,8 +1,13 @@
+import { useContext } from 'react'
 import { Outlet } from 'react-router-dom'
 
 import Directory from '../../Components/directory/directory'
+import UserContext from '../../context/user.context'
 
 const Home = () => {
+  //subscribe to current user context
+  const user = useContext(UserContext)
+  console.log(user)
   const categories = [
     {
       id: 1,
