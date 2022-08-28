@@ -1,5 +1,5 @@
 import './sign-up-form.styles.scss'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
@@ -30,6 +30,7 @@ export default function SignUpForm() {
     try {
       const { user } = await createAuthUserWithEmailAndPassword(email, password)
       await createUserDocumentFromAuth(user, { displayName })
+
       setFormFields(defaultFormFields)
     } catch (err) {
       if (err.code === 'auth/email-already-in-use') {

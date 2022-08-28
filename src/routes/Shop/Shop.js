@@ -1,5 +1,13 @@
-import { Outlet, Link } from 'react-router-dom'
+import SHOPDATA from '../../shop-data.json'
 
 export default function Shop() {
-  return <div className='shop'>i am shop component</div>
+  return (
+    <div>
+      {SHOPDATA.map(({ id, name }) => (
+        <div key={id}>
+          <h1>{name}</h1>
+        </div>
+      ))}
+    </div>
+  )
 }

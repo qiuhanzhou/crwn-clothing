@@ -6,21 +6,41 @@ import Authentication from './routes/Authentication/Authentication'
 
 import UserContext from './context/user.context'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import {
+  onAuthStateChangedListener,
+  createUserDocumentFromAuth,
+} from './utils/firebase/firebase.utils'
+import { ProductContext } from './context/products.context'
+import PRODUCTS from './shop-data.json'
 
 export default function App() {
-  //set current user state
   const [currentUser, setCurrentUser] = useState(null)
+  const [products, setProducts] = useState(PRODUCTS)
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChangedListener((user) => {
+      //if the user does not exist, create new user, otherwise just set current user
+      if (user) {
+        createUserDocumentFromAuth(user)
+      }
+      setCurrentUser(user)
+    })
+
+    return unsubscribe
+  }, [])
 
   return (
     <UserContext.Provider value={{ currentUser, setCurrentUser }}>
-      <Routes>
-        <Route path='/' element={<Navigation />}>
-          <Route index element={<Home />} />
-          <Route path='shop' element={<Shop />} />
-          <Route path='sign-in' element={<Authentication />} />
-        </Route>
-      </Routes>
+      <ProductContext.Provider value={(products, setProducts)}>
+        <Routes>
+          <Route path='/' element={<Navigation />}>
+            <Route index element={<Home />} />
+            <Route path='shop' element={<Shop />} />
+            <Route path='auth' element={<Authentication />} />
+          </Route>
+        </Routes>
+      </ProductContext.Provider>
     </UserContext.Provider>
   )
 }
