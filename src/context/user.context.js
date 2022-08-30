@@ -1,7 +1,29 @@
-import { createContext } from 'react'
+import { createContext, useState, useEffect } from 'react'
 
-//the defaultValue argument is only used when a component does not have a matching Provider
-//above it in the tree. This default value can be helpful for testing components in isolation without wrapping them. Note: passing undefined as a Provider value does not cause consuming components to use defaultValue.
+import {
+  onAuthStateChangedListener,
+  createUserDocumentFromAuth,
+} from '../utils/firebase/firebase.utils'
 
-const UserContext = createContext()
-export default UserContext
+export const UserContext = createContext({
+  setCurrentUser: () => null,
+  currentUser: null,
+})
+
+export const UserProvider = ({ children }) => {
+  const [currentUser, setCurrentUser] = useState(null)
+  const value = { currentUser, setCurrentUser }
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChangedListener((user) => {
+      if (user) {
+        createUserDocumentFromAuth(user)
+      }
+      setCurrentUser(user)
+    })
+
+    return unsubscribe
+  }, [])
+
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>
+}
