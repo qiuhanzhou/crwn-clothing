@@ -4,7 +4,7 @@ import './index.scss'
 import App from './App'
 import { BrowserRouter } from 'react-router-dom'
 import { UserProvider } from './context/UserContext'
-import { ProductsProvider } from './context/ProductsContext'
+import { CategoriesProvider } from './context/CategoriesContext'
 import { CartProvider } from './context/CartContext'
 
 const rootElement = document.getElementById('root')
@@ -14,9 +14,9 @@ render(
     <BrowserRouter>
       <UserProvider>
         <CartProvider>
-          <ProductsProvider>
+          <CategoriesProvider>
             <App />
-          </ProductsProvider>
+          </CategoriesProvider>
         </CartProvider>
       </UserProvider>
     </BrowserRouter>

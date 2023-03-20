@@ -7,27 +7,30 @@ export default function CheckoutItem({ cartItem }) {
 
   const { cartItems, setCartItems } = useContext(CartContext)
 
-  const removeItemHandler = (e) => {
+  const removeItemHandler = () => {
+    //if current qty is 1, remove item from cart completely
+    if (quantity === 1) {
+      clearItemHandler()
+    }
+    //else reduce qty by 1
+    else {
+      setCartItems(
+        cartItems.map((item) =>
+          item.id === cartItem.id ? { ...item, quantity: quantity - 1 } : item,
+        ),
+      )
+    }
+  }
+
+  const addItemHandler = () => {
     setCartItems(
       cartItems.map((item) =>
-        item.id === cartItem.id
-          ? { ...item, quantity: item.quantity - 1 }
-          : item,
+        item.id === cartItem.id ? { ...item, quantity: quantity + 1 } : item,
       ),
     )
   }
 
-  const addItemHandler = (e) => {
-    setCartItems(
-      cartItems.map((item) =>
-        item.id === cartItem.id
-          ? { ...item, quantity: item.quantity + 1 }
-          : item,
-      ),
-    )
-  }
-
-  const clearItemHandler = (e) => {
+  const clearItemHandler = () => {
     setCartItems(cartItems.filter((item) => item.id !== cartItem.id))
   }
 
