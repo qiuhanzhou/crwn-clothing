@@ -12,7 +12,9 @@ export const CategoriesContext = createContext({
 })
 
 export const CategoriesProvider = ({ children }) => {
-  const [categoriesMap, setCategoriesMap] = useState([])
+  const [categoriesMap, setCategoriesMap] = useState({})
+
+  //only call once
 
   // useEffect(() => {
   //   addCollectionAndDocuments('categories', SHOP_DATA)
@@ -20,10 +22,17 @@ export const CategoriesProvider = ({ children }) => {
 
   //retrieve categories from firebase
   useEffect(() => {
-    getCategoriesAndDocuments('categories').then((categoriesMap) => {
+    const getCategoriesMap = async () => {
+      const categoriesMap = await getCategoriesAndDocuments()
       console.log(categoriesMap)
       setCategoriesMap(categoriesMap)
-    })
+    }
+    getCategoriesMap()
+
+    // getCategoriesAndDocuments().then((categoriesMap) => {
+    //   console.log(categoriesMap)
+    //   setCategoriesMap(categoriesMap)
+    // })
   }, [])
 
   const value = { categoriesMap, setCategoriesMap }
