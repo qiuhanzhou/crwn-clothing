@@ -10,6 +10,7 @@ export const BackgroundImage = styled.div`
 `
 
 export const Body = styled.div`
+  max-width: 30%;
   height: 90px;
   padding: 0 25px;
   display: flex;
