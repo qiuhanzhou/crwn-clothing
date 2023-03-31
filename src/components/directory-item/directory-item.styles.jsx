@@ -53,7 +53,7 @@ export const DirectoryItemContainer = styled(Link)`
   margin-left: 7.5px;
 
   &:hover {
-    cursor: pointer;z
+    cursor: pointer;
 
     ${BackgroundImage} {
       transform: scale(1.1);
