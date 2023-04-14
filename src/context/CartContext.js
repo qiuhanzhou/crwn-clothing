@@ -54,6 +54,33 @@ export const CartProvider = ({ children }) => {
     }
   }
 
+  const removeItemHandler = () => {
+    //if current qty is 1, remove item from cart completely
+    if (quantity === 1) {
+      clearItemHandler()
+    }
+    //else reduce qty by 1
+    else {
+      setCartItems(
+        cartItems.map((item) =>
+          item.id === cartItem.id ? { ...item, quantity: quantity - 1 } : item,
+        ),
+      )
+    }
+  }
+
+  const addItemHandler = () => {
+    setCartItems(
+      cartItems.map((item) =>
+        item.id === cartItem.id ? { ...item, quantity: quantity + 1 } : item,
+      ),
+    )
+  }
+
+  const clearItemHandler = () => {
+    setCartItems(cartItems.filter((item) => item.id !== cartItem.id))
+  }
+
   //update cart count based on cart items
   useEffect(() => {
     setCartCount(cartItems.reduce((acc, cur) => acc + cur.quantity, 0))
