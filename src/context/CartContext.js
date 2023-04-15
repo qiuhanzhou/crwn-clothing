@@ -5,8 +5,9 @@ export const CartContext = createContext({
   setIsOpen: () => {},
   cartItems: [],
   addItemToCart: () => {},
-  removeItemFromCart: () => {},
+  removeItem: () => {},
   clearItemFromCart: () => {},
+  addItem: () => {},
 })
 
 export const CartProvider = ({ children }) => {
@@ -43,10 +44,10 @@ export const CartProvider = ({ children }) => {
     )
     if (existingCartItem) {
       setCartItems(
-        cartItems.map((cartItem) =>
-          cartItem.id === productToAdd.id
-            ? { ...cartItem, quantity: cartItem.quantity + 1 }
-            : cartItem,
+        cartItems.map((item) =>
+          item.id === productToAdd.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item,
         ),
       )
     }
@@ -56,22 +57,33 @@ export const CartProvider = ({ children }) => {
     }
   }
 
-  const removeItemFromCart = () => {
+  const removeItem = (cartItem) => {
     //if current qty is 1, remove item from cart completely
-    if (quantity === 1) {
-      clearItemFromCart()
+    if (cartItem.quantity === 1) {
+      clearItemFromCart(cartItem)
     }
     //else reduce qty by 1
     else {
       setCartItems(
         cartItems.map((item) =>
-          item.id === cartItem.id ? { ...item, quantity: quantity - 1 } : item,
+          item.id === cartItem.id
+            ? { ...item, quantity: item.quantity - 1 }
+            : item,
         ),
       )
     }
   }
+  const addItem = (cartItem) => {
+    setCartItems(
+      cartItems.map((item) =>
+        item.id === cartItem.id
+          ? { ...item, quantity: item.quantity + 1 }
+          : item,
+      ),
+    )
+  }
 
-  const clearItemFromCart = () => {
+  const clearItemFromCart = (cartItem) => {
     setCartItems(cartItems.filter((item) => item.id !== cartItem.id))
   }
 
@@ -93,7 +105,8 @@ export const CartProvider = ({ children }) => {
     cartItems,
     setCartItems,
     addItemToCart,
-    removeItemFromCart,
+    removeItem,
+    addItem,
     clearItemFromCart,
     cartCount,
     setCartCount,

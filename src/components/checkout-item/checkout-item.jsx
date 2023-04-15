@@ -13,8 +13,14 @@ import {
 export default function CheckoutItem({ cartItem }) {
   const { imageUrl, price, name, quantity } = cartItem
 
-  const { cartItems, setCartItems, removeItemFromCart } =
-    useContext(CartContext)
+  const {
+    cartItems,
+    setCartItems,
+    addItemToCart,
+    addItem,
+    removeItem,
+    clearItemFromCart,
+  } = useContext(CartContext)
 
   return (
     <CheckoutItemContainer>
@@ -23,14 +29,18 @@ export default function CheckoutItem({ cartItem }) {
       </ImageContainer>
       <CheckoutItemDetails> {name} </CheckoutItemDetails>
       <CheckoutItemQuantity>
-        <CheckoutItemArrow onClick={removeItemFromCart}>
+        <CheckoutItemArrow onClick={() => removeItem(cartItem)}>
           &#10094;
         </CheckoutItemArrow>
         <CheckoutItemQtyValue>{quantity}</CheckoutItemQtyValue>
-        <CheckoutItemArrow onClick={addItemHandler}>&#10095;</CheckoutItemArrow>
+        <CheckoutItemArrow onClick={() => addItem(cartItem)}>
+          &#10095;
+        </CheckoutItemArrow>
       </CheckoutItemQuantity>
       <CheckoutItemDetails> {price}</CheckoutItemDetails>
-      <RemoveButton onClick={clearItemHandler}>&#10005;</RemoveButton>
+      <RemoveButton onClick={() => clearItemFromCart(cartItem)}>
+        &#10005;
+      </RemoveButton>
     </CheckoutItemContainer>
   )
 }
