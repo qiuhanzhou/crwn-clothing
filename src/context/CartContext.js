@@ -5,6 +5,8 @@ export const CartContext = createContext({
   setIsOpen: () => {},
   cartItems: [],
   addItemToCart: () => {},
+  removeItemFromCart: () => {},
+  clearItemFromCart: () => {},
 })
 
 export const CartProvider = ({ children }) => {
@@ -54,10 +56,10 @@ export const CartProvider = ({ children }) => {
     }
   }
 
-  const removeItemHandler = () => {
+  const removeItemFromCart = () => {
     //if current qty is 1, remove item from cart completely
     if (quantity === 1) {
-      clearItemHandler()
+      clearItemFromCart()
     }
     //else reduce qty by 1
     else {
@@ -69,15 +71,7 @@ export const CartProvider = ({ children }) => {
     }
   }
 
-  const addItemHandler = () => {
-    setCartItems(
-      cartItems.map((item) =>
-        item.id === cartItem.id ? { ...item, quantity: quantity + 1 } : item,
-      ),
-    )
-  }
-
-  const clearItemHandler = () => {
+  const clearItemFromCart = () => {
     setCartItems(cartItems.filter((item) => item.id !== cartItem.id))
   }
 
@@ -99,6 +93,8 @@ export const CartProvider = ({ children }) => {
     cartItems,
     setCartItems,
     addItemToCart,
+    removeItemFromCart,
+    clearItemFromCart,
     cartCount,
     setCartCount,
     cartTotal,
