@@ -8,6 +8,8 @@ export const CartContext = createContext({
   removeItem: () => {},
   clearItemFromCart: () => {},
   addItem: () => {},
+  cartCount: 0,
+  cartTotal: 0,
 })
 
 export const CartProvider = ({ children }) => {
@@ -21,24 +23,6 @@ export const CartProvider = ({ children }) => {
 
   const addItemToCart = (productToAdd) => {
     // if product already exists in cart, increase qty by 1
-
-    // const existingCartItemIndex = cartItems.findIndex(
-    //   (cartItem) => cartItem.id === productToAdd.id,
-    // )
-    // if (existingCartItemIndex !== -1) {
-    //   const left = cartItems.slice(0, existingCartItemIndex)
-    //   const right = cartItems.slice(existingCartItemIndex + 1)
-
-    //   setCartItems([
-    //     ...left,
-    //     {
-    //       ...cartItems[existingCartItemIndex],
-    //       quantity: cartItems[existingCartItemIndex].quantity + 1,
-    //     },
-    //     ...right,
-    //   ])
-    // }
-
     const existingCartItem = cartItems.find(
       (cartItem) => cartItem.id === productToAdd.id,
     )
